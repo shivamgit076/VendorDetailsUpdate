@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_partner_view_form_inherit_capture_vendor_details" model="ir.ui.view">
+        <field name="name">res.partner.view.form.inherit.capture_vendor_details</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet" position="before">
+                <header>
+                    <button name="%(capture_vendor_details.action_update_vendor_detail_wizard)d" invisible="active != True" string="Update Details" type="action" class="oe_highlight" data-hotkey="h" help="Send email to vendor for updation of the details"/>
+                    <button name="button_approve" invisible="active != False" string="Approve" type="object" class="oe_highlight" data-hotkey="g" confirm="Are you sure you have verified the details and want to proceed ahead?"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="menu_vendor_approver" name="Vendor Approver" parent="purchase.menu_purchase_root" sequence="100" groups="purchase.group_purchase_manager"/>
+
+    <record id="vendor_approve_action" model="ir.actions.act_window">
+        <field name="name">Approve Vendor</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('active','=',False),('supplier_rank', '&gt;', 0)]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p>create records
+            </p><p>
+                Please click on create button to create
+            </p>
+        </field>
+    </record>
+    
+    <menuitem
+        id="approve_vendor_menu"
+        name="Approve Vendors"
+        parent="menu_vendor_approver"
+        action="vendor_approve_action"
+        sequence="10"/>
+</odoo>

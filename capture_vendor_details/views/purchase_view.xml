@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Action for Update Vendor -->
+    <record id="action_update_vendor" model="ir.actions.act_window">
+        <field name="name">Send Email to Vendor</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('supplier_rank', '&gt;', 0)]</field>
+    </record>
+   
+    <!-- Main Menu: Update Vendor -->
+    <menuitem id="menu_update_vendor"
+              name="Send Email to Vendor"
+              parent="menu_vendor_approver"
+              sequence="10"
+              action="action_update_vendor"/>
+</odoo>

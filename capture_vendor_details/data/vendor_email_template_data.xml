@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Email Template for Update Vendor -->
+    <record id="email_template_update_vendor" model="mail.template">
+        <field name="name">Update Vendor Email</field>
+        <field name="subject">Vendor Details Update</field>
+        <field name="email_from">${(user.email or '')}</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>Hello,</p>
+            <p>This is a notification that your vendor details have been updated.</p>
+             <a href="/vendor-form"
+                style="display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">
+                View Vendor Form
+            </a>
+            <p>Best regards,</p>
+            <p>Your Company</p>
+            ]]>
+        </field>
+    </record>
+</odoo>

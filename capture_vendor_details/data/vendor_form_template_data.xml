@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="vendor_form_template" name="Vendor Form">
+        <t t-call="website.layout">
+            <div class="container mt-4">
+                <input type="hidden" name="partner_id" value="t-esc:request.params.get('partner_id')"/>
+            
+                <h1>Fill in Vendor Details</h1>
+                <form action="/vendor-form/submit" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <input type="hidden" name="partner_id" t-att-value="partner_id and partner_id.id or ''"/>
+                    
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" class="form-control" required="required"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" required="required"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" class="form-control"/>
+                    </div>
+                    <fieldset>
+                        <legend>Address</legend>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="street1">Street 1</label>
+                                <input type="text" id="street1" name="street1" class="form-control" placeholder="Street 1"/>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="street2">Street 2</label>
+                                <input type="text" id="street2" name="street2" class="form-control" placeholder="Street 2"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="city">City</label>
+                                <input type="text" id="city" name="city" class="form-control" placeholder="City" />
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="zip">ZIP</label>
+                                <input type="text" id="zip" name="zip" class="form-control" placeholder="ZIP" />
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="country">Country</label>
+                                <select id="country" name="country" class="form-control" >
+                                    <option value="">Select Country</option>
+                                        <t t-foreach="countries" t-as="country">
+                                            <option t-att-value="country.id" t-att-selected="'selected' if partner_id and partner_id.country_id.id == country.id else ''">
+                                                <t t-esc="country.name"/>
+                                            </option>
+                                        </t>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        <label for="VAT">VAT</label>
+                        <input type="tel" id="vat" name="VAT" class="form-control"/>
+                    </div>
+                   
+                    <div id="vat_documents" class="form-group">
+                    <label for="vat_documents">Existing VAT Documents</label>
+                    <select class="js-m2m-multiple col-xl-6 mb-1 new-get_data"
+                            multiple="multiple">
+                        <t t-foreach="vat_certificate_ids" t-as="tag">
+                            <option t-att-value="tag.id" selected="selected">
+                                <t t-esc="tag.name or 'Unnamed Document'" id="vat_certificate_ids"/>
+                            </option>
+                        </t>
+                    </select>
+                    </div>
+
+                    <!-- Upload new VAT documents -->
+                    <div class="form-group">
+                        <label for="vat_certificate">Upload New VAT Documents</label>
+                        <input type="file" name="vat_certificate_ids" id="vat_certificate_ids" accept="image/*,application/pdf,video/*" multiple="multiple" class="form-control-file" />
+                    </div>
+
+
+                    <br/>
+                     <div class="form-group">
+                        <label for="is_supplier">
+                            <input type="checkbox" name="is_supplier" id="is_supplier" value="1"/>
+                            Supplier
+                        </label>
+                    </div>
+
+                    <!-- Add more fields as needed -->
+                    <button type="submit" class="btn btn-primary mb-4">Submit</button>
+                </form>
+            </div>
+        </t>
+    </template>
+
+    <template id="vendor_form_success" name="Vendor Form Success">
+        <t t-call="website.layout">
+            <div class="container mt-4">
+                <h1>Thank You!</h1>
+                <p>Your vendor details have been successfully submitted.</p>
+            </div>
+        </t>
+    </template>
+</odoo>

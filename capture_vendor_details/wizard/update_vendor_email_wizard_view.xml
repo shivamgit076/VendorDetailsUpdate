@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_update_vendor_email_wizard_form" model="ir.ui.view">
+        <field name="name">update.vendor.email.wizard.form</field>
+        <field name="model">update.vendor.email.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Update Vendor Email">
+                <group>
+                    <field name="email"/>
+                    <field name="partner_id" readonly="1" invisible="1"/>
+                </group>
+                <footer>
+                    <button string="Send" type="object" name="update_email" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+     <record id="action_update_vendor_detail_wizard" model="ir.actions.act_window">
+        <field name="name">Update Vendor Email</field>
+        <field name="res_model">update.vendor.email.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_update_vendor_email_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+      <!-- Submenu: Update Vendor Detail -->
+    <menuitem id="menu_update_vendor_detail"
+              name="Send Email to Vendor"
+              parent="menu_update_vendor"
+              sequence="20"
+              action="action_update_vendor_detail_wizard"/>
+</odoo>
